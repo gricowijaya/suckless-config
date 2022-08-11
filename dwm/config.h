@@ -1,25 +1,28 @@
+#include <X11/XF86keysym.h>
 /* See LICENSE file for copyright and license details. */
-static const char *upvol[]   = { "amixer", "set", "Master", "3+",     NULL };
-static const char *downvol[] = { "amixer", "set", "Master", "3-",     NULL };
+static const char *upvol[]   = { "amixer", "set", "Master", "10%+",     NULL };
+static const char *downvol[] = { "amixer", "set", "Master", "10%-",     NULL };
 static const char *mutevol[] = { "amixer", "set", "Master", "toggle", NULL };
-static const char *upbright[] = { "brightnessctl", "s", "-n", "5+", NULL };
-static const char *downbright[] = { "brightnessctl", "s", "-n", "5-", NULL };
+static const char *upbright[] = { "brightnessctl", "s", "-n", "100+", NULL };
+static const char *downbright[] = { "brightnessctl", "s", "-n", "100-", NULL };
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int borderpx  = 5;        /* border pixel of windows */
 static const unsigned int gappx     = 4;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const int extrabar           = 1;        /* 0 means bottom bar */
+static const int topbar             = 1;        /* 0 means no top bar */
+static const int extrabar           = 1;        /* 0 means no bottom bar */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 2;     /* 0 means no systray */
-static const char *fonts[]          = { "FiraCode Nerd Font:pixelsize=18:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
-static const char dmenufont[]       = "FiraCode Nerd Font:size=16";
+/* static const char *fonts[]          = { "FiraCode Nerd Font:pixelsize=18:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true"}; */
+/* static const char dmenufont[]       = "FiraCode Nerd Font:size=16"; */
+static const char *fonts[]          = { "mononoki Nerd Font Mono:pixelsize=19:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
+static const char dmenufont[]       = "mononoki Nerd Font Mono:size=16";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -35,8 +38,8 @@ static char *colors[][3] = {
 
 /* tagging */
 // static const char *tags[] = { ">_", "", "", "", ""};
-// static const char *tags[] = { "一", "二", "三", "四", "五"};
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7"};
+static const char *tags[] = { "一", "二", "三", "四", "五"};
+/* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7"}; */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -117,14 +120,21 @@ static Key keys[] = {
 	{ MODKEY,			                  XK_minus,  setgaps,	       {.i = -1 } },
 	{ MODKEY,			                  XK_equal,  setgaps,	       {.i = +1 } },
 	{ MODKEY|ShiftMask,		          XK_equal,  setgaps,	       {.i =  0 } },
-	// { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
-	{ MODKEY,                       XK_F1,     spawn,          {.v = mutevol } },
-	{ MODKEY,                       XK_F2,     spawn,          {.v = downvol } },
-	{ MODKEY,                       XK_F3,     spawn,          {.v = upvol   } },
-	{ MODKEY|ShiftMask,             XK_b,      toggleextrabar, {0} },
-	// { MODKEY,                       XK_F4,     xrdb,           {.v = NULL } },
-	{ MODKEY,                       XK_F5,     spawn,          {.v = downbright } },
-	{ MODKEY,                       XK_F6,     spawn,          {.v = upbright } },
+  /* { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } }, */
+  /* { MODKEY,                       XK_F1,     spawn,          {.v = mutevol } }, */ 
+  /* { MODKEY,                       XK_F2,     spawn,          {.v = downvol } }, */ 
+  /* { MODKEY,                       XK_F3,     spawn,          {.v = upvol   } }, */ 
+  /* { MODKEY|ShiftMask,             XK_b,      toggleextrabar, {0} }, */
+  /* // { MODKEY,                       XK_F4,     xrdb,           {.v = NULL } }, *1/ */
+  /* { MODKEY,                       XK_F5,     spawn,          {.v = downbright } }, */
+  /* { MODKEY,                       XK_F6,     spawn,          {.v = upbright } }, */
+	{ 0,                       XK_F1,     spawn,          {.v = mutevol } },
+	{ 0,                       XK_F2,     spawn,          {.v = downvol } },
+	{ 0,                       XK_F3,     spawn,          {.v = upvol   } },
+	/* { 0|ShiftMask,             XK_b,      toggleextrabar, {0} }, */
+  /* { 0,                       XK_F4,     xrdb,           {.v = NULL } }, */
+	{ 0,                       XK_F5,     spawn,          {.v = downbright } },
+	{ 0,                       XK_F6,     spawn,          {.v = upbright } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
