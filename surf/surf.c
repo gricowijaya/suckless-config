@@ -56,6 +56,7 @@ typedef enum {
 	CaretBrowsing,
 	Certificate,
 	CookiePolicies,
+	DarkMode,
 	DiskCache,
 	DefaultCharset,
 	DNSPrefetch,
@@ -259,6 +260,7 @@ char *argv0;
 static ParamName loadtransient[] = {
 	Certificate,
 	CookiePolicies,
+	DarkMode,
 	DiskCache,
 	DNSPrefetch,
 	FileURLsCrossAccess,
@@ -771,6 +773,10 @@ setparameter(Client *c, int refresh, ParamName p, const Arg *a)
 		    cookiepolicy_get());
 		refresh = 0;
 		break;
+  case DarkMode:
+    g_object_set(gtk_settings_get_default(),
+                "gtk-application-prefer-dark-theme", a->i, NULL);
+    break;
 	case DiskCache:
 		webkit_web_context_set_cache_model(
 		    webkit_web_view_get_context(c->view), a->i ?
