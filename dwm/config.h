@@ -66,11 +66,13 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[\\]",      dwindle },
+ 	{ "[\\]",     dwindle },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
+	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -103,7 +105,9 @@ static Key keys[] = {
 	{ MODKEY,		                    XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY|ShiftMask,             XK_r,  	   togglefloating, {0} },
 	{ MODKEY,                       XK_t,  	   setlayout,      {0} },
 	{ MODKEY,                       XK_n,  	   shiftview,      {.i = +1} },
@@ -120,21 +124,11 @@ static Key keys[] = {
 	{ MODKEY,			                  XK_minus,  setgaps,	       {.i = -1 } },
 	{ MODKEY,			                  XK_equal,  setgaps,	       {.i = +1 } },
 	{ MODKEY|ShiftMask,		          XK_equal,  setgaps,	       {.i =  0 } },
-  /* { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } }, */
-  /* { MODKEY,                       XK_F1,     spawn,          {.v = mutevol } }, */ 
-  /* { MODKEY,                       XK_F2,     spawn,          {.v = downvol } }, */ 
-  /* { MODKEY,                       XK_F3,     spawn,          {.v = upvol   } }, */ 
-  /* { MODKEY|ShiftMask,             XK_b,      toggleextrabar, {0} }, */
-  /* // { MODKEY,                       XK_F4,     xrdb,           {.v = NULL } }, *1/ */
-  /* { MODKEY,                       XK_F5,     spawn,          {.v = downbright } }, */
-  /* { MODKEY,                       XK_F6,     spawn,          {.v = upbright } }, */
-	{ 0,                       XK_F1,     spawn,          {.v = mutevol } },
-	{ 0,                       XK_F2,     spawn,          {.v = downvol } },
-	{ 0,                       XK_F3,     spawn,          {.v = upvol   } },
-	/* { 0|ShiftMask,             XK_b,      toggleextrabar, {0} }, */
-  /* { 0,                       XK_F4,     xrdb,           {.v = NULL } }, */
-	{ 0,                       XK_F5,     spawn,          {.v = downbright } },
-	{ 0,                       XK_F6,     spawn,          {.v = upbright } },
+	{ 0,                            XK_F1,     spawn,          {.v = mutevol } },
+	{ 0,                            XK_F2,     spawn,          {.v = downvol } },
+	{ 0,                            XK_F3,     spawn,          {.v = upvol   } },
+	{ 0,                            XK_F5,     spawn,          {.v = downbright } },
+	{ 0,                            XK_F6,     spawn,          {.v = upbright } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
