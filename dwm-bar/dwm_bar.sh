@@ -24,7 +24,7 @@ export SEP2="]"
 # Import the modules
 #. "$DIR/bar-functions/dwm_alarm.sh"
 . "$DIR/bar-functions/dwm_alsa.sh"
-#. "$DIR/bar-functions/dwm_backlight.sh"
+. "$DIR/bar-functions/dwm_backlight.sh"
 . "$DIR/bar-functions/dwm_battery.sh"
 #. "$DIR/bar-functions/dwm_ccurse.sh"
 #. "$DIR/bar-functions/dwm_cmus.sh"
@@ -75,6 +75,7 @@ do
     lowerbar=" $lowerbar$(dwm_alsa)"
     lowerbar=" $lowerbar${__DWM_BAR_NETWORKMANAGER__}"
     lowerbar=" $lowerbar$(dwm_resources)"
+    lowerbar=" $lowerbar$(dwm_backlight)"
     
     # xsetroot -name "$upperbar"
     # Uncomment the line below to enable the lowerbar 
