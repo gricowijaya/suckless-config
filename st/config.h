@@ -5,11 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-// static char *font = ":size=20:antialias=true:autohint=true";
-/* static char *font = "FiraCode Nerd Font:pixelsize=18:antialias=true:autohint=true"; */
-static char *font = "mononoki Nerd Font Mono:pixelsize=19:antialias=true:autohint=true";
-/* static char *font = "Iosevka Nerd Font Mono:pixelsize=18:antialias=true:autohint=true:style:Heavy"; */
-/* static char *font = "monospace:pixelsize=18:antialias=true:autohint=true"; */
+static char *font = "TerminessTTF Nerd Font Mono:pixelsize=19:antialias=true:autohint=true";
 static int borderpx = 8;
 
 /*
