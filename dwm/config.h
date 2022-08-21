@@ -8,7 +8,7 @@ static const char *downbright[]          = { "brightnessctl", "s", "-n", "100-",
 
 /* appearance */
 static const unsigned int borderpx       = 2;        /* border pixel of windows */
-static const unsigned int gappx          = 2;        /* gaps between windows */
+static const unsigned int gappx          = 9;        /* gaps between windows */
 static const unsigned int snap           = 32;       /* snap pixel */
 static const int swallowfloating         = 0;        /* 1 means swallow floating windows by default */
 static const int showbar                 = 1;        /* 0 means no bar */
@@ -21,12 +21,13 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray             = 2;     /* 0 means no systray */
 static const char *fonts[]               = { "TerminessTTF Nerd Font Mono:pixelsize=19:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
 static const char dmenufont[]            = "TerminessTTF Nerd Font Mono:size=16";
-static char normbgcolor[]                = "#222222";
+/* static char normbgcolor[]                = "#222222"; */
+static char normbgcolor[]                = "#000000";
 static char normbordercolor[]            = "#444444";
 static char normfgcolor[]                = "#bbbbbb";
 static char selfgcolor[]                 = "#eeeeee";
-/* static char selbordercolor[]             = "#e60012"; */ // thinkpad red
-/* static char selbgcolor[]                 = "#e60012"; */ // thinkpad red
+/* static char selbordercolor[]             = "#e60012"; // thinkpad red */
+/* static char selbgcolor[]                 = "#e60012"; // thinkpad red */
 static char selbordercolor[]             = "#005577"; // default
 static char selbgcolor[]                 = "#005577"; // default
 
@@ -66,13 +67,13 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
+	{ "|M|",      centeredmaster },          /* first entry is default */
+	{ ">M>",      centeredfloatingmaster }, 
+	{ "[]=",      tile },    
  	{ "[\\]",     dwindle },
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "><>",      NULL },                    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -106,8 +107,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[5]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[6]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_r,  	   togglefloating, {0} },
 	{ MODKEY,                       XK_t,  	   setlayout,      {0} },
 	{ MODKEY,                       XK_n,  	   shiftview,      {.i = +1} },
