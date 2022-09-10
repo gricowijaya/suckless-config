@@ -130,7 +130,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
+	int isfixed, iscentered, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
 	pid_t pid;
 	Client *next;
 	Client *snext;
@@ -220,14 +220,15 @@ static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
+static Monitor *numtomon(int num);
 static void drawbar(Monitor *m);
 static void drawbars(void);
-static int drawstatusbar(Monitor *m, int bh, char* text);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
+static void focusnthmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
@@ -276,10 +277,12 @@ static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
+static void tagnthmon(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void toggleextrabar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglealwaysontop(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -319,13 +322,15 @@ static pid_t winpid(Window w);
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";
-static char stext[1024];
+static char stext[256];
 static char estextl[256];
 static char estextr[256];
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
 static int lrpad;            /* sum of left and right padding for text */
+static int vp;               /* vertical padding for bar */
+static int sp;               /* side padding for bar */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static void (*handler[LASTEvent]) (XEvent *) = {
@@ -639,7 +644,7 @@ cleanup(void)
 
     for (i = 0; i < CurLast; i++)
 		drw_cur_free(drw, cursor[i]);
-	for (i = 0; i < LENGTH(colors) + 1; i++)
+	for (i = 0; i < LENGTH(colors); i++)
 		free(scheme[i]);
 	XDestroyWindow(dpy, wmcheckwin);
 	drw_free(drw);
@@ -777,6 +782,7 @@ configurenotify(XEvent *e)
 			}
 			XMoveResizeWindow(dpy, eb.win, mons->wx, eb.y, mons->ww, bh);
 			XMoveResizeWindow(dpy, m->extrabarwin, m->wx, m->eby, m->ww, bh);
+			XMoveResizeWindow(dpy, m->barwin, m->wx + sp, m->by + vp, m->ww -  2 * sp, bh);
 			focus(NULL);
 			arrange(NULL);
 		}
@@ -911,114 +917,17 @@ dirtomon(int dir)
 	return m;
 }
 
-int
-drawstatusbar(Monitor *m, int bh, char* stext) {
-	int ret, i, w, x, len;
-	short isCode = 0;
-	char *text;
-	char *p;
+Monitor *
+numtomon(int num)
+{
+	Monitor *m = NULL;
+	int i = 0;
 
-	len = strlen(stext) + 1 ;
-	if (!(text = (char*) malloc(sizeof(char)*len)))
-		die("malloc");
-	p = text;
-	memcpy(text, stext, len);
-
-	/* compute width of the status text */
-	w = 0;
-	i = -1;
-	while (text[++i]) {
-		if (text[i] == '^') {
-			if (!isCode) {
-				isCode = 1;
-				text[i] = '\0';
-				w += TEXTW(text) - lrpad;
-				text[i] = '^';
-				if (text[++i] == 'f')
-					w += atoi(text + ++i);
-			} else {
-				isCode = 0;
-				text = text + i + 1;
-				i = -1;
-			}
-		}
+	for(m = mons, i=0; m->next && i < num; m = m->next){
+		i++;
 	}
-	if (!isCode)
-		w += TEXTW(text) - lrpad;
-	else
-		isCode = 0;
-	text = p;
-
-	w += 2; /* 1px padding on both sides */
-	ret = x = m->ww - w;
-
-	drw_setscheme(drw, scheme[LENGTH(colors)]);
-	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
-	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
-	drw_rect(drw, x, 0, w, bh, 1, 1);
-	x++;
-
-	/* process status text */
-	i = -1;
-	while (text[++i]) {
-		if (text[i] == '^' && !isCode) {
-			isCode = 1;
-
-			text[i] = '\0';
-			w = TEXTW(text) - lrpad;
-			drw_text(drw, x, 0, w, bh, 0, text, 0);
-
-			x += w;
-
-			/* process code */
-			while (text[++i] != '^') {
-				if (text[i] == 'c') {
-					char buf[8];
-					memcpy(buf, (char*)text+i+1, 7);
-					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColFg], buf);
-					i += 7;
-				} else if (text[i] == 'b') {
-					char buf[8];
-					memcpy(buf, (char*)text+i+1, 7);
-					buf[7] = '\0';
-					drw_clr_create(drw, &drw->scheme[ColBg], buf);
-					i += 7;
-				} else if (text[i] == 'd') {
-					drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
-					drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
-				} else if (text[i] == 'r') {
-					int rx = atoi(text + ++i);
-					while (text[++i] != ',');
-					int ry = atoi(text + ++i);
-					while (text[++i] != ',');
-					int rw = atoi(text + ++i);
-					while (text[++i] != ',');
-					int rh = atoi(text + ++i);
-
-					drw_rect(drw, rx + x, ry, rw, rh, 1, 0);
-				} else if (text[i] == 'f') {
-					x += atoi(text + ++i);
-				}
-			}
-
-			text = text + i + 1;
-			i=-1;
-			isCode = 0;
-		}
-	}
-
-	if (!isCode) {
-		w = TEXTW(text) - lrpad;
-		drw_text(drw, x, 0, w, bh, 0, text, 0);
-	}
-
-	drw_setscheme(drw, scheme[SchemeNorm]);
-	free(p);
-
-	return ret;
+	return m;
 }
-
 
 void
 drawbar(Monitor *m)
@@ -1035,10 +944,10 @@ drawbar(Monitor *m)
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
-		/* drw_setscheme(drw, scheme[SchemeNorm]); */
-		/* tw = TEXTW(stext) - lrpad / 2 + 2; /1* 2px extra right padding *1/ */
-		/* drw_text(drw, m->ww - tw - stw, 0, tw, bh, lrpad / 2 - 2, stext, 0); */
-		tw = m->ww - drawstatusbar(m, bh, stext);
+		drw_setscheme(drw, scheme[SchemeNorm]);
+		tw = TEXTW(stext) - lrpad / 2 + 2; /* 2px extra right padding */
+		/* drw_text(drw, m->ww - tw - stw, 0, tw, bh, lrpad / 2 - 2, stext, 0); */ // before barpadding patch 11 Sept 2021
+		drw_text(drw, m->ww - tw - 2 * sp, 0, tw, bh, 0, stext, 0); // after barpadding patch 11 Sept 2021
 	}
 
 	resizebarwin(m);
@@ -1068,12 +977,17 @@ drawbar(Monitor *m)
 	if ((w = m->ww - tw - stw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-			if (m->sel->isfloating)
+			/* drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0); */ // before barpadding patch
+			drw_text(drw, x, 0, w - 2 * sp, bh, lrpad / 2, m->sel->name, 0); // after barpadding patch 
+			if (m->sel->isfloating) {
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
-		} else {
+				if (m->sel->isalwaysontop)
+					drw_rect(drw, x + boxs, bh - boxw, boxw, boxw, 0, 0);
+            }
+        } else {
 			drw_setscheme(drw, scheme[SchemeNorm]);
-			drw_rect(drw, x, 0, w, bh, 1, 1);
+			/* drw_rect(drw, x, 0, w, bh, 1, 1); */ // before barpadding patch
+			drw_rect(drw, x, 0, w - 2 * sp, bh, 1, 1); // after barpadding patch
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
@@ -1182,6 +1096,22 @@ focusmon(const Arg *arg)
 	selmon = m;
 	focus(NULL);
 }
+
+void
+focusnthmon(const Arg *arg)
+{
+	Monitor *m;
+
+	if (!mons->next)
+		return;
+
+	if ((m = numtomon(arg->i)) == selmon)
+		return;
+	unfocus(selmon->sel, 0);
+	selmon = m;
+	focus(NULL);
+}
+
 
 void
 focusstack(const Arg *arg)
@@ -1816,6 +1746,17 @@ restack(Monitor *m)
 		return;
 	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
 		XRaiseWindow(dpy, m->sel->win);
+
+	/* raise the aot window */
+	for(Monitor *m_search = mons; m_search; m_search = m_search->next){
+		for(c = m_search->clients; c; c = c->next){
+			if(c->isalwaysontop){
+				XRaiseWindow(dpy, c->win);
+				break;
+			}
+		}
+	}
+
 	if (m->lt[m->sellt]->arrange) {
 		wc.stack_mode = Below;
 		wc.sibling = m->barwin;
@@ -2028,6 +1969,8 @@ setup(void)
 		die("no fonts could be loaded.");
 	lrpad = drw->fonts->h;
 	bh = drw->fonts->h + 2;
+	sp = sidepad;
+	vp = (topbar == 1) ? vertpad : - vertpad;
 	updategeom();
 	/* init atoms */
 	utf8string = XInternAtom(dpy, "UTF8_STRING", False);
@@ -2056,9 +1999,7 @@ setup(void)
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
 	/* init appearance */
-	/* scheme = ecalloc(LENGTH(colors), sizeof(Clr *)); */
-	scheme = ecalloc(LENGTH(colors) + 1, sizeof(Clr *));
-	scheme[LENGTH(colors)] = drw_scm_create(drw, colors[0], 3);
+	scheme = ecalloc(LENGTH(colors), sizeof(Clr *));
 	for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 3);
 	/* init system tray */
@@ -2164,6 +2105,15 @@ tagmon(const Arg *arg)
 }
 
 void
+tagnthmon(const Arg *arg)
+{
+	if (!selmon->sel || !mons->next)
+		return;
+	sendmon(selmon->sel, numtomon(arg->i));
+}
+
+
+void
 tile(Monitor *m)
 {
 	unsigned int i, n, h, mw, my, ty;
@@ -2194,6 +2144,7 @@ togglebar(const Arg *arg)
 {
 	selmon->showbar = !selmon->showbar;
 	updatebarpos(selmon);
+	XMoveResizeWindow(dpy, selmon->barwin, selmon->wx + sp, selmon->by + vp, selmon->ww - 2 * sp, bh);
 	resizebarwin(selmon);
 	if (showsystray) {
 		XWindowChanges wc;
@@ -2230,6 +2181,32 @@ togglefloating(const Arg *arg)
 	if (selmon->sel->isfloating)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
+	else
+		selmon->sel->isalwaysontop = 0; /* disabled, turn this off too */
+	arrange(selmon);
+}
+
+void
+togglealwaysontop(const Arg *arg)
+{
+	if (!selmon->sel)
+		return;
+	if (selmon->sel->isfullscreen)
+		return;
+
+	if(selmon->sel->isalwaysontop){
+		selmon->sel->isalwaysontop = 0;
+	}else{
+		/* disable others */
+		for(Monitor *m = mons; m; m = m->next)
+			for(Client *c = m->clients; c; c = c->next)
+				c->isalwaysontop = 0;
+
+		/* turn on, make it float too */
+		selmon->sel->isfloating = 1;
+		selmon->sel->isalwaysontop = 1;
+	}
+
 	arrange(selmon);
 }
 
@@ -2356,7 +2333,8 @@ updatebars(void)
 	XClassHint ch = {"dwm", "dwm"};
 	for (m = mons; m; m = m->next) {
 		if (!m->barwin) {
-			m->barwin = XCreateWindow(dpy, root, m->wx, m->by, m->ww, bh, 0, DefaultDepth(dpy, screen),
+			/* m->barwin = XCreateWindow(dpy, root, m->wx, m->by, m->ww, bh, 0, DefaultDepth(dpy, screen), */ // before barpadding patch
+  		    m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh, 0, DefaultDepth(dpy, screen), // after barpadding patch
 					CopyFromParent, DefaultVisual(dpy, screen),
 					CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
 			XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
@@ -2402,11 +2380,15 @@ updatebarpos(Monitor *m)
 	m->wy = m->my;
 	m->wh = m->mh;
 	if (m->showbar) {
-		m->wh -= bh;
-		m->by = m->topbar ? m->wy : m->wy + m->wh;
-		m->wy = m->topbar ? m->wy + bh : m->wy;
+		/* m->wh -= bh; */
+		/* m->by = m->topbar ? m->wy : m->wy + m->wh; */
+		/* m->wy = m->topbar ? m->wy + bh : m->wy; */
+		m->wh = m->wh - vertpad - bh; // after barpadding patch
+		m->by = m->topbar ? m->wy : m->wy + m->wh + vertpad;
+		m->wy = m->topbar ? m->wy + bh + vp : m->wy;
 	} else
-		m->by = -bh;
+		/* m->by = -bh; */ // before barpadding patch
+		m->by = -bh - vp;  // after barpaddig patch
 	if(m == mons && eb.show) {
 		m->wh -= bh;
 		eb.y = topbar ? m->wy + m->wh : m->wy;

@@ -14,6 +14,9 @@ static const int swallowfloating         = 0;        /* 1 means swallow floating
 static const int showbar                 = 1;        /* 0 means no bar */
 static const int topbar                  = 1;        /* 0 means no top bar */
 static const int extrabar                = 1;        /* 0 means no bottom bar */
+static const char *barlayout             = "tln|s";
+static const int vertpad                 = 5;       /* vertical padding of bar */
+static const int sidepad                 = 5;       /* horizontal padding of bar */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -21,15 +24,12 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray             = 2;     /* 0 means no systray */
 static const char *fonts[]               = { "TerminessTTF Nerd Font Mono:pixelsize=19:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
 static const char dmenufont[]            = "TerminessTTF Nerd Font Mono:size=16";
-/* static char normbgcolor[]                = "#222222"; */
-static char normbgcolor[]                = "#000000";
+static char normbgcolor[]                = "#282828"; // default #222222
 static char normbordercolor[]            = "#444444";
 static char normfgcolor[]                = "#bbbbbb";
-static char selfgcolor[]                 = "#eeeeee";
-/* static char selbordercolor[]             = "#e60012"; // thinkpad red */
-/* static char selbgcolor[]                 = "#e60012"; // thinkpad red */
-static char selbordercolor[]             = "#005577"; // default
-static char selbgcolor[]                 = "#005577"; // default
+static char selfgcolor[]                 = "#FFD7AF"; // default #EEEEEE
+static char selbordercolor[]             = "#FFAF00"; // default 
+static char selbgcolor[]                 = "#282828"; // default #005577
 
 static const char statussep              = ';';      /* separator between statuses */
 static char *colors[][3]                 = {
@@ -82,7 +82,10 @@ static const Layout layouts[] = {
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
+        { ALTMOD,                       KEY,      focusnthmon,    {.i  = TAG } }, \
+        { ALTMOD|ShiftMask,             KEY,      tagnthmon,      {.i  = TAG } },
+
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -110,6 +113,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_r,  	   togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_r,      togglealwaysontop, {0} },
 	{ MODKEY,                       XK_t,  	   setlayout,      {0} },
 	{ MODKEY,                       XK_n,  	   shiftview,      {.i = +1} },
 	{ MODKEY,                       XK_b,  	   shiftview,      {.i = -1} },
