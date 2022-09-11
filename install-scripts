@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+cp . $HOME/.local/src/
+cp -r .config $HOME/.config
+cp .xinitrc $HOME/.xinitrc
+cp .bashrc $HOME/.bashrc
+cp .bash_profile $HOME/.bash_profile
+
+# todo create the sudo make install for all suckless utility 
