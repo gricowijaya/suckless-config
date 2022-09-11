@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "TerminessTTF Nerd Font Mono:pixelsize=19:antialias=true:autohint=true";
-static int borderpx = 4;
+static int borderpx = 25;
 
 /*
  * What program is execed by st depends of these precedence rules:
