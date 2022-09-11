@@ -14,9 +14,8 @@ static const int swallowfloating         = 0;        /* 1 means swallow floating
 static const int showbar                 = 1;        /* 0 means no bar */
 static const int topbar                  = 1;        /* 0 means no top bar */
 static const int extrabar                = 1;        /* 0 means no bottom bar */
-static const char *barlayout             = "tln|s";
-static const int vertpad                 = 5;       /* vertical padding of bar */
-static const int sidepad                 = 5;       /* horizontal padding of bar */
+/* static const int vertpad                 = 10;       /1* vertical padding of bar *1/ */
+/* static const int sidepad                 = 10;       /1* horizontal padding of bar *1/ */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -78,13 +77,14 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTMOD Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-        { ALTMOD,                       KEY,      focusnthmon,    {.i  = TAG } }, \
-        { ALTMOD|ShiftMask,             KEY,      tagnthmon,      {.i  = TAG } },
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, 
+        /* { ALTMOD,                       KEY,      focusnthmon,    {.i  = TAG } }, \ */
+        /* { ALTMOD|ShiftMask,             KEY,      tagnthmon,      {.i  = TAG } }, */
 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
