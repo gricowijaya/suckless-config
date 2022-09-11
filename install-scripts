@@ -1,9 +1,21 @@
 #!/usr/bin/bash
 
+# Copy this file to $HOME/.local/src 
 cp . $HOME/.local/src/
+
+# Copy the config file into $HOME/.config
 cp -r .config $HOME/.config
-cp .xinitrc $HOME/.xinitrc
+
+# Copy the bashrc, bash_profile and xinitrc into $HOME/
 cp .bashrc $HOME/.bashrc
 cp .bash_profile $HOME/.bash_profile
+cp .xinitrc $HOME/.xinitrc
 
-# todo create the sudo make install for all suckless utility 
+# the commend for installing the suckess utility
+command="sudo make install clean"
+
+# loop through $HOME/.local/src and perform the execution of command
+for d in $HOME/.local/src 
+do
+     (cd "$d" && $command)
+done
