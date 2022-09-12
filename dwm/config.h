@@ -51,12 +51,14 @@ static const Rule rules[] = {
 	{ "TelegramDesktop",    NULL,     NULL,           1 << 1,         1,          0,           0,        -1 },
 	{ "discord",            NULL,     NULL,           1 << 1,         1,          0,           0,        -1 },
 	{ "whatsdesk",          NULL,     NULL,           1 << 1,         1,          0,           0,        -1 },
-	{ "obs",                NULL,     NULL,           0,              1,          0,           0,        -1 },
-	{ "Lutris",             NULL,     NULL,           0,              1,          0,           0,        -1 },
-	{ "firefox",   		    NULL,     NULL,           1 << 2,         1,          0,          -1,        -1 },
+	{ "zoom",               NULL,     NULL,           1 << 4,         1,          0,           0,        -1 },
+	{ "obs",                NULL,     NULL,           0 << 4,         1,          0,           0,        -1 },
+	{ "obs",                NULL,     NULL,           0 << 5,         1,          0,           0,        -1 },
+	{ "Lutris",             NULL,     NULL,           0,              0,          0,           0,        -1 },
+	{ "firefox",   		    NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
 	{ "qutebrowser",   		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
 	{ "St",                 NULL,     NULL,           0,              1,          1,           0,        -1 },
-	{ "gimp",               NULL,     NULL,           1 << 3,         1,          0,           0,        -1 },
+	{ "gimp",               NULL,     NULL,           1 << 3,         0,          0,           0,        -1 },
 	{ NULL,                 NULL,     "Event Tester", 0,              0,          0,           1,        -1 }, /* xev */
 };
 
@@ -67,12 +69,12 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 #include "fibonacci.c"
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },                    /* first entry is default */
+	/* symbol     arrange function */        /* first entry is default */
+	{ "><>",      NULL },                    /* no layout function means floating behavior */
+	{ "[]=",      tile },                    
 	{ "|M|",      centeredmaster },          
 	{ ">M>",      centeredfloatingmaster }, 
  	{ "[\\]",     dwindle },
-	{ "><>",      NULL },                    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
 };
