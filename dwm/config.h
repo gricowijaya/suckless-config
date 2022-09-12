@@ -7,8 +7,8 @@ static const char *upbright[]            = { "brightnessctl", "s", "-n", "100+",
 static const char *downbright[]          = { "brightnessctl", "s", "-n", "100-", NULL };
 
 /* appearance */
-static const unsigned int borderpx       = 2;        /* border pixel of windows */
-static const unsigned int gappx          = 9;        /* gaps between windows */
+static const unsigned int borderpx       = 1;        /* border pixel of windows */
+static const unsigned int gappx          = 10;        /* gaps between windows */
 static const unsigned int snap           = 32;       /* snap pixel */
 static const int swallowfloating         = 0;        /* 1 means swallow floating windows by default */
 static const int showbar                 = 1;        /* 0 means no bar */
@@ -24,10 +24,10 @@ static const int showsystray             = 2;     /* 0 means no systray */
 static const char *fonts[]               = { "TerminessTTF Nerd Font Mono:pixelsize=19:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
 static const char dmenufont[]            = "TerminessTTF Nerd Font Mono:size=16";
 static char normbgcolor[]                = "#282828"; // default #222222
-static char normbordercolor[]            = "#444444";
-static char normfgcolor[]                = "#bbbbbb";
-static char selfgcolor[]                 = "#FFD7AF"; // default #EEEEEE
-static char selbordercolor[]             = "#FFAF00"; // default 
+static char normbordercolor[]            = "#606060"; // default #444444
+static char normfgcolor[]                = "#bbbbbb"; // default #bbbbbb
+static char selfgcolor[]                 = "#EEEEEE"; // default #EEEEEE
+static char selbordercolor[]             = "#EEEEEE"; // default 
 static char selbgcolor[]                 = "#282828"; // default #005577
 
 static const char statussep              = ';';      /* separator between statuses */
@@ -52,9 +52,9 @@ static const Rule rules[] = {
 	{ "whatsdesk",          NULL,     NULL,           1 << 1,         0,          0,           0,        -1 },
 	{ "obs",                NULL,     NULL,           0,              1,          0,           0,        -1 },
 	{ "Lutris",             NULL,     NULL,           0,              1,          0,           0,        -1 },
-	{ "firefox",   		      NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "qutebrowser",   		  NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "St",                 NULL,     NULL,           0,              0,          1,           0,        -1 },
+	{ "firefox",   		    NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
+	{ "qutebrowser",   		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
+	{ "St",                 NULL,     NULL,           0,              1,          1,           0,        -1 },
 	{ NULL,                 NULL,     "Event Tester", 0,              0,          0,           1,        -1 }, /* xev */
 };
 
@@ -66,9 +66,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "|M|",      centeredmaster },          /* first entry is default */
+	{ "[]=",      tile },                    /* first entry is default */
+	{ "|M|",      centeredmaster },          
 	{ ">M>",      centeredfloatingmaster }, 
-	{ "[]=",      tile },    
  	{ "[\\]",     dwindle },
 	{ "><>",      NULL },                    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
@@ -106,7 +106,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,	     zoom,           {0} },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_s,      incnmaster,     {.i = +1 } },
-	{ MODKEY,		                    XK_q,      killclient,     {0} },
+	{ MODKEY,		                XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
@@ -118,7 +118,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,  	   shiftview,      {.i = +1} },
 	{ MODKEY,                       XK_b,  	   shiftview,      {.i = -1} },
 	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
-	{ MODKEY,			                  XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,			            XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -126,9 +126,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,			                  XK_minus,  setgaps,	       {.i = -1 } },
-	{ MODKEY,			                  XK_equal,  setgaps,	       {.i = +1 } },
-	{ MODKEY|ShiftMask,		          XK_equal,  setgaps,	       {.i =  0 } },
+	{ MODKEY,		                XK_minus,  setgaps,	       {.i = -1 } },
+	{ MODKEY,		                XK_equal,  setgaps,	       {.i = +1 } },
+	{ MODKEY|ShiftMask,	            XK_equal,  setgaps,	       {.i =  0 } },
 	{ 0,                            XK_F1,     spawn,          {.v = mutevol } },
 	{ 0,                            XK_F2,     spawn,          {.v = downvol } },
 	{ 0,                            XK_F3,     spawn,          {.v = upvol   } },
