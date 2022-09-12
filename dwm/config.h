@@ -48,13 +48,15 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "TelegramDesktop",    NULL,     NULL,           1 << 1,         0,          0,           0,        -1 },
-	{ "whatsdesk",          NULL,     NULL,           1 << 1,         0,          0,           0,        -1 },
+	{ "TelegramDesktop",    NULL,     NULL,           1 << 1,         1,          0,           0,        -1 },
+	{ "discord",            NULL,     NULL,           1 << 1,         1,          0,           0,        -1 },
+	{ "whatsdesk",          NULL,     NULL,           1 << 1,         1,          0,           0,        -1 },
 	{ "obs",                NULL,     NULL,           0,              1,          0,           0,        -1 },
 	{ "Lutris",             NULL,     NULL,           0,              1,          0,           0,        -1 },
-	{ "firefox",   		    NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
+	{ "firefox",   		    NULL,     NULL,           1 << 2,         1,          0,          -1,        -1 },
 	{ "qutebrowser",   		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
 	{ "St",                 NULL,     NULL,           0,              1,          1,           0,        -1 },
+	{ "gimp",               NULL,     NULL,           1 << 3,         1,          0,           0,        -1 },
 	{ NULL,                 NULL,     "Event Tester", 0,              0,          0,           1,        -1 }, /* xev */
 };
 
