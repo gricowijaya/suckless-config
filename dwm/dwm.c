@@ -581,6 +581,7 @@ unswallow(Client *c)
 	arrange(c->mon);
 }
 
+
 void
 buttonpress(XEvent *e)
 {
@@ -893,14 +894,15 @@ destroynotify(XEvent *e)
 	if ((c = wintoclient(ev->window)))
 		unmanage(c, 1);
 
+	else if ((c = swallowingclient(ev->window)))
+		unmanage(c->swallowing, 1);
+
 	else if ((c = wintosystrayicon(ev->window))) {
 		removesystrayicon(c);
 		resizebarwin(selmon);
 		updatesystray();
 	}
 
-	else if ((c = swallowingclient(ev->window)))
-		unmanage(c->swallowing, 1);
 }
 
 void
