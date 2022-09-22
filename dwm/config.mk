@@ -28,7 +28,6 @@ BDLIBS = -lfribidi
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC} -I$(BDINC)
-# LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -lX11-xcb -lxcb -lxcb-res ${KVMLIB}
 LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} -lX11-xcb -lxcb -lxcb-res ${BDLIBS}
 
 # flags

@@ -58,7 +58,7 @@ static const Rule rules[] = {
 	{ "steam",              NULL,     NULL,           0 << 4 ,        0,          0,           0,        -1 },
 	{ "Firefox",   		    NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
 	{ "qutebrowser",   		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "St",                 NULL,     NULL,           0,              0,          1,           0,        -1 },
+	{ "st",                 NULL,     NULL,           0,              0,          1,           0,        -1 },
 	{ "zathura",            NULL,     NULL,           0 << 6,         0,          0,           0,        -1 },
 	{ "Gimp",               NULL,     NULL,           0 << 3,         0,          0,           0,        -1 },
 	{ NULL,                 NULL,     "Event Tester", 0,              0,          0,           1,        -1 }, /* xev */
