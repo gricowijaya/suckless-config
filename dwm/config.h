@@ -9,14 +9,17 @@ static const char *ss[]                  = { "flameshot", "gui", NULL};
 
 /* appearance */
 static const unsigned int borderpx       = 1;        /* border pixel of windows */
-static const unsigned int gappx          = 1;        /* gaps between windows */
+/* static const unsigned int gappx          = 1;        /1* gaps between windows *1/ */
+static const unsigned int gappih         = 20;       /* horiz inner gap between windows */
+static const unsigned int gappiv         = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh         = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 30;       /* vert outer gap between windows and screen edge */
+static       int smartgaps               = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int snap           = 32;       /* snap pixel */
 static const int swallowfloating         = 0;        /* 1 means swallow floating windows by default */
 static const int showbar                 = 1;        /* 0 means no bar */
 static const int topbar                  = 1;        /* 0 means no top bar */
 static const int extrabar                = 1;        /* 0 means no bottom bar */
-/* static const int vertpad                 = 10;       /1* vertical padding of bar *1/ */
-/* static const int sidepad                 = 10;       /1* horizontal padding of bar *1/ */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -64,8 +67,9 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
+#include "vanitygaps.c"
 
-#include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "|M|",      centeredmaster },          /* first entry is default */
@@ -129,9 +133,25 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY, 	                    XK_minus,  setgaps,	       {.i = -1 } },
-	{ MODKEY,			            XK_equal,  setgaps,	       {.i = +1 } },
-	{ MODKEY|ShiftMask,		        XK_equal,  setgaps,	       {.i =  0 } },
+	/* { MODKEY, 	                    XK_minus,  setgaps,	       {.i = -1 } }, */
+	/* { MODKEY,			            XK_equal,  setgaps,	       {.i = +1 } }, */
+	/* { MODKEY|ShiftMask,		        XK_equal,  setgaps,	       {.i =  0 } }, */
+	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_6,      incrihgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_7,      incrivgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_8,      incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_9,      incrovgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
 	{ 0,                            XK_F1,     spawn,          {.v = mutevol } },
 	{ 0,                            XK_F2,     spawn,          {.v = downvol } },
 	{ 0,                            XK_F3,     spawn,          {.v = upvol   } },
