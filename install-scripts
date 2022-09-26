@@ -7,6 +7,8 @@ cp . $HOME/.local/src/
 cp -r .config $HOME/.config
 
 # Copy the bashrc, bash_profile and xinitrc into $HOME/
+mv $HOME/.bashrc $HOME/.bashrc.backup
+mv $HOME/.bash_profile $HOME/.bash_profile
 cp .bashrc $HOME/.bashrc
 cp .bash_profile $HOME/.bash_profile
 cp .xinitrc $HOME/.xinitrc
@@ -15,7 +17,7 @@ cp .xinitrc $HOME/.xinitrc
 command="sudo make install clean"
 
 # loop through $HOME/.local/src and perform the execution of command
-for d in $HOME/.local/src 
+for dir in $HOME/.local/src 
 do
-     (cd "$d" && $command)
+     (cd "$dir" && $command)
 done
