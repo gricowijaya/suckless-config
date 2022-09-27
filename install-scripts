@@ -8,7 +8,8 @@ cp -r .config $HOME/.config
 
 # Copy the bashrc, bash_profile and xinitrc into $HOME/
 mv $HOME/.bashrc $HOME/.bashrc.backup
-mv $HOME/.bash_profile $HOME/.bash_profile
+mv $HOME/.bash_profile $HOME/.bash_profile.backup
+mv $HOME/.xinitrc $HOME/.xinitc.backup
 cp .bashrc $HOME/.bashrc
 cp .bash_profile $HOME/.bash_profile
 cp .xinitrc $HOME/.xinitrc
