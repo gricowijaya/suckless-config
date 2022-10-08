@@ -10,10 +10,10 @@ static const char *ss[]                  = { "flameshot", "gui", NULL};
 /* appearance */
 static const unsigned int borderpx       = 1;        /* border pixel of windows */
 /* static const unsigned int gappx          = 1;        /1* gaps between windows *1/ */
-static const unsigned int gappih         = 20;       /* horiz inner gap between windows */
-static const unsigned int gappiv         = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 30;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 0;       /* horiz inner gap between windows */
+static const unsigned int gappiv         = 0;       /* vert inner gap between windows */
+static const unsigned int gappoh         = 0;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 0;       /* vert outer gap between windows and screen edge */
 static       int smartgaps               = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int snap           = 32;       /* snap pixel */
 static const int swallowfloating         = 0;        /* 1 means swallow floating windows by default */
@@ -25,9 +25,9 @@ static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corn
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray             = 2;     /* 0 means no systray */
-static const char *fonts[]               = { "Terminus (TTF):pixelsize=20:antialias=true:autohint=true:size=16", 
+static const char *fonts[]               = { "Terminus (TTF):pixelsize=18:antialias=true:autohint=true:size=16", 
                                              "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
-static const char dmenufont[]            = "Terminus (TTF):pixelsize=20";
+static const char dmenufont[]            = "Terminus (TTF):pixelsize=18";
 static char normbgcolor[]                = "#282828"; // default #222222
 static char normbordercolor[]            = "#606060"; // default #444444
 static char normfgcolor[]                = "#bbbbbb"; // default #bbbbbb
@@ -55,6 +55,7 @@ static const Rule rules[] = {
 	 */
 	/* class                instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "TelegramDesktop",    NULL,     NULL,           1 << 6,         0,          0,           0,        -1 },
+	{ "whatsdesk",          NULL,     NULL,           1 << 6,         0,          0,           0,        -1 },
 	{ "discord",            NULL,     NULL,           1 << 7,         0,          0,           0,        -1 },
 	{ "zoom",               NULL,     NULL,           1 << 5,         0,          0,           0,        -1 },
 	{ "obs",                NULL,     NULL,           1 << 4,         0,          0,           0,        -1 },
@@ -112,7 +113,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_g,      togglebar,      {0} },
-	{ MODKEY,                       XK_f,	     zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_f,      zoom,           {0} },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_s,      incnmaster,     {.i = +1 } },
 	{ MODKEY,		                XK_q,      killclient,     {0} },
@@ -123,6 +124,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_r,  	   togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_r,      togglealwaysontop, {0} },
+	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_t,  	   setlayout,      {0} },
 	{ MODKEY,                       XK_n,  	   shiftview,      {.i = +1} },
 	{ MODKEY,                       XK_b,  	   shiftview,      {.i = -1} },
