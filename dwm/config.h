@@ -10,10 +10,10 @@ static const char *ss[]                  = { "flameshot", "gui", NULL};
 /* appearance */
 static const unsigned int borderpx       = 1;        /* border pixel of windows */
 /* static const unsigned int gappx          = 1;        /1* gaps between windows *1/ */
-static const unsigned int gappih         = 0;       /* horiz inner gap between windows */
-static const unsigned int gappiv         = 0;       /* vert inner gap between windows */
-static const unsigned int gappoh         = 0;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 0;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv         = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh         = 40;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 40;       /* vert outer gap between windows and screen edge */
 static       int smartgaps               = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int snap           = 32;       /* snap pixel */
 static const int swallowfloating         = 0;        /* 1 means swallow floating windows by default */
@@ -78,9 +78,9 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "|M|",      centeredmaster },          /* first entry is default */
 	{ ">M>",      centeredfloatingmaster }, 
+	{ "><>",      NULL },                    /* no layout function means floating behavior */
  	{ "[\\]",     dwindle },
 	{ "[]=",      tile },    
-	{ "><>",      NULL },                    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
 };
@@ -120,12 +120,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_t,  	   setlayout,      {.v = &layouts[5]}  },
+	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_r,  	   togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_r,      togglealwaysontop, {0} },
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
-	{ MODKEY,                       XK_t,  	   setlayout,      {0} },
 	{ MODKEY,                       XK_n,  	   shiftview,      {.i = +1} },
 	{ MODKEY,                       XK_b,  	   shiftview,      {.i = -1} },
 	{ 0,                            XK_Print,  spawn,          {.v = ss}},
@@ -138,11 +138,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	/* { MODKEY, 	                    XK_minus,  setgaps,	       {.i = -1 } }, */
-	/* { MODKEY,			            XK_equal,  setgaps,	       {.i = +1 } }, */
-	/* { MODKEY|ShiftMask,		        XK_equal,  setgaps,	       {.i =  0 } }, */
-	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
-	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_minus,  incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_equal,  incrgaps,       {.i = -1 } },
 	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
 	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
