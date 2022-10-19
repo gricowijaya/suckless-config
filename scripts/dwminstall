@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+# Copy this file to $HOME/.local/src 
+cp . $HOME/.local/src/
+
+# Copy the config file into $HOME/.config
+cp -r .config $HOME/.config
+
+# Copy the bashrc, bash_profile and xinitrc into $HOME/
+mv $HOME/.bashrc $HOME/.bashrc.backup
+mv $HOME/.bash_profile $HOME/.bash_profile.backup
+mv $HOME/.xinitrc $HOME/.xinitc.backup
+cp .bashrc $HOME/.bashrc
+cp .bash_profile $HOME/.bash_profile
+cp .xinitrc $HOME/.xinitrc
+
+# the commend for installing the suckess utility
+command="sudo make install clean"
+
+# loop through $HOME/.local/src and perform the execution of command
+for dir in $HOME/.local/src 
+do
+     (cd "$dir" && $command)
+done

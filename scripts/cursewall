@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# get the list of the proccess id
+for pid in $(pidof -x cursewall); do 
+    if [ $pid != $$ ]; then
+        kill -9 $pid
+        exit 1
+    fi
+done
+
+cd "$HOME/.local/src/wallpaper/"
+
+wallpaper=($(ls))
+
+for pic in "${wallpaper[@]}"
+    do 
+    :
+    wallpath+=($(readlink -f $pic)) 
+done
+
+while true; do
+    for p in "${wallpath[@]}"
+        do 
+        :
+        feh --bg-fill $p 
+        sleep 30s
+    done
+done
+
