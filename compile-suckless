@@ -1,4 +1,0 @@
-#!/bin/bash
-cd $HOME/.local/src/${1};
-sudo make install clean;
-
