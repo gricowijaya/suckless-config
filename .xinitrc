@@ -60,19 +60,30 @@ fi
 # exec startxfce4
 
 ## Dynamic wallpaper
-# $HOME/.local/src/dynamic-wallpaper &
+# cursewall &
+
+## Animated Wallpaper
+# paperview $HOME/.local/src/paperview/wallpaper/town 5 &
+
+## Dynamic Animated Wallpaper
+# curseanimwall &
+
+# wallpaper
+# feh --bg-fill $HOME/.local/src/wallpaper/934006.jpg  &
+
+# swap super with alt
+setxkbmap -option altwin:swap_alt_win
 
 ## DWM
 export _JAVA_AWT_WM_NONREPARENTING=1
 increasemousetrackpoint &
-paperview $HOME/.local/src/paperview/animated-wallpaper/town 5 &
 statusbar &
 nm-applet & # to start the network applet
 firefox &
-telegram-desktop &
-discord &
+# telegram-desktop &
+# discord --start-minimized &
 st & # uncomment to auto start st
 # picom & # should be turn off to use the animated wallpaper
 startdwm
-# exec dwm
+exec dwm
 
