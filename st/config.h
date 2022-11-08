@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Terminus (TTF):pixelsize=18:antialias=true:autohint=true";
-static int borderpx = 0;
+static char *font = "VictorMono Nerd Font Mono:pixelsize=18:antialias=true:autohint=true";
+static int borderpx = 10;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -106,8 +106,8 @@ static const char *colorname[] = {
 	"#ebdbb2",
 	[255] = 0,
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#282828",   /* 256 -> bg */
-	"#ebdbb2",   /* 257 -> fg */
+	"#282c34",   /* 256 -> bg default : #282828*/
+	"#eeeeee",   /* 257 -> fg default : #ebdbb2*/
 	"#add8e6", /* 258 -> cursor */
 };
 

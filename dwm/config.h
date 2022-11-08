@@ -10,10 +10,10 @@ static const char *ss[]                  = { "flameshot", "gui", NULL};
 /* appearance */
 static const unsigned int borderpx       = 1;        /* border pixel of windows */
 /* static const unsigned int gappx          = 1;        /1* gaps between windows *1/ */
-static const unsigned int gappih         = 0;       /* horiz inner gap between windows */
-static const unsigned int gappiv         = 0;       /* vert inner gap between windows */
-static const unsigned int gappoh         = 0;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 0;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv         = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh         = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 10;       /* vert outer gap between windows and screen edge */
 static       int smartgaps               = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int snap           = 32;       /* snap pixel */
 static const int swallowfloating         = 0;        /* 1 means swallow floating windows by default */
@@ -24,16 +24,16 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray             = 2;     /* 0 means no systray */
-static const char *fonts[]               = { "VictorMono Nerd Font Mono:pixelsize=22:antialias=true:autohint=true:size=16", 
+static const int showsystray             = 0;     /* 0 means no systray */
+static const char *fonts[]               = { "VictorMono Nerd Font Mono:pixelsize=18:antialias=true:autohint=true:size=16", 
                                              "JoyPixels:pixelsize=11:antialias=true:autohint=true"};
-static const char dmenufont[]            = "VictorMono Nerd Font Mono:pixelsize=22";
-static char normbgcolor[]                = "#282828"; // default #222222
+static const char dmenufont[]            = "VictorMono Nerd Font Mono:pixelsize=18";
+static char normbgcolor[]                = "#000000"; // default #222222
 static char normbordercolor[]            = "#606060"; // default #444444
 static char normfgcolor[]                = "#bbbbbb"; // default #bbbbbb
 static char selfgcolor[]                 = "#EEEEEE"; // default #EEEEEE
 static char selbordercolor[]             = "#EEEEEE"; // default 
-static char selbgcolor[]                 = "#282828"; // default #005577
+static char selbgcolor[]                 = "#000000"; // default #005577
 
 static const char statussep              = ';';      /* separator between statuses */
 static char *colors[][3]                 = {
