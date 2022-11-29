@@ -79,9 +79,9 @@ _open_files_for_editing() {
 term="$(cat /proc/$PPID/comm)"
 
 # set transparent st
-if [[ $term = "st" ]]; then
-    transset-df "0.90" --id "$WINDOWID" >/dev/null
-fi
+# if [[ $term = "st" ]]; then
+#     transset-df "0.85" --id "$WINDOWID" >/dev/null
+# fi
 
 #------------------------------------------------------------
 
@@ -92,106 +92,52 @@ fi
 # alias ef='_open_files_for_editing'     # 'ef' opens given file(s) for editing
 # alias pacdiff=eos-pacdiff
 ################################################################################
+alias cowjoke='curl -s https://official-joke-api.appspot.com/jokes/programming/random# | jq -r ".[0].setup, .[0].punchline" | cowsay'
 alias v='nvim'
-alias vi='nvim'
+alias h='helix'
 alias tmux="TERM=screen-256color-bce tmux"
 alias nf='neofetch --ascii_distro arch'
-alias rn='sudo systemctl restart NetworkManager'
 alias pn='ping gnu.org'
-# alias itcc='cd /home/gricowijaya/Documents/Project/itcc/itcc-2022/; ide'
-alias itcc='cd /home/gricowijaya/Documents/Project/itcc/itcc-2022/; v'
-alias vitcc='cd /home/gricowijaya/Documents/Project/itcc/itcc-2022/;'
-alias kantor='cd /home/gricowijaya/Documents/Cakeplabs/Task/'
-alias ctf='cd /home/gricowijaya/Documents/CTF/'
-alias practice='cd /home/gricowijaya/Documents/Practice'
-alias kuliah='cd /home/gricowijaya/Documents/Kuliah/'
-alias binar='cd /home/gricowijaya/Documents/Kuliah/SemesterV/BinarAcademy/'
-alias buildit='cd /home/gricowijaya/Documents/Kuliah/BuildIT2022'
-alias doc='cd /home/gricowijaya/Documents/DeveloperDocumentation/'
-alias hdmi='cd /home/gricowijaya/.screenlayout; ./monitor_1.sh; cd /home/gricowijaya'
-alias edp1='cd /home/gricowijaya/.screenlayout; ./edp1.sh; cd /home/gricowijaya'
-alias eright='cd /home/gricowijaya/.screenlayout; ./extend_right.sh; cd /home/gricowijaya'
-alias eleft='cd /home/gricowijaya/.screenlayout; ./extend_left.sh; cd /home/gricowijaya'
-alias sl='cd /home/gricowijaya/.local/src/; v .'
 alias scb='source .bashrc'
 alias tatt='tmux attach-session -t'
 alias lg='lazygit'
-# alias fduck='firefox duck.com' 
-# alias fyt='firefox youtube.com'
-# alias fgo='firefox google.com'
 
+# environment for Directory
+################################################################################
+export ITCC='cd /home/gricowijaya/Documents/Project/itcc/itcc-2022'
+export CAKEPLABS='cd /home/gricowijaya/Documents/Cakeplabs/Task'
+export CTF='cd /home/gricowijaya/Documents/CTF'
+export KULIAH='cd /home/gricowijaya/Documents/Kuliah'
+export PRAKTIKUMPEMROG='cd /home/gricowijaya/Documents/Kuliah/Praktikum-Pemrograman/SemesterV'
+export BINAR='cd /home/gricowijaya/Documents/Kuliah/SemesterV/BinarAcademy'
+export DOC='cd /home/gricowijaya/Documents/DeveloperDocumentation'
+export HDMI='cd /home/gricowijaya/.screenlayout; ./monitor_1.sh; cd /home/gricowijaya'
+export SUCKLESS='cd /home/gricowijaya/.local/src'
+export MUSIC='cd /home/gricowijaya/Music'
+export PRIMEFLIGHT='cd /home/gricowijaya/Documents/Kuliah/SemesterV/BinarAcademy/chapter/ch9-11'
 
+## SOURCE FZF
 source /usr/share/fzf/completion.bash
 source /usr/share/fzf/key-bindings.bash
+
+## STARSHIP
 # eval "$(starship init bash)"
-## Emulate an MS-DOS prompt in your Linux shell.
-## Laszlo Szathmary (jabba.laci@gmail.com), 2011
-## Project home page:
-## https://ubuntuincident.wordpress.com/2011/02/08/emulate-the-ms-dos-prompt/
-##
-##
-## Modified by Soldier of Fortran
-##
-## Add to you ~/.bashrc file with: 'source ~/.themes/95/bashrc'
-
-#function msdos_pwd
-#{
-#    local dir="`pwd`"
-
-#    echo $dir | tr '/' '\\'
-#}
-
-#export PS1='C:`msdos_pwd`> '
 
 # Custom Bash Prompt
 # get current branch in git repo
-function parse_git_branch() {
-	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
-	if [ ! "${BRANCH}" == "" ]
-	then
-		STAT=`parse_git_dirty`
-		echo "[${BRANCH}${STAT}]"
-	else
-		echo ""
-	fi
-}
+# function parse_git_branch() {
+# 	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+# 	if [ ! "${BRANCH}" == "" ]
+# 	then
+# 		STAT=`parse_git_dirty`
+# 		echo "[${BRANCH}${STAT}]"
+# 	else
+# 		echo ""
+# 	fi
+# }
 
-# get current status of git repo
-function parse_git_dirty {
-	status=`git status 2>&1 | tee`
-	dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
-	untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
-	ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
-	newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
-	renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
-	deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
-	bits=''
-	if [ "${renamed}" == "0" ]; then
-		bits=">${bits}"
-	fi
-	if [ "${ahead}" == "0" ]; then
-		bits="*${bits}"
-	fi
-	if [ "${newfile}" == "0" ]; then
-		bits="+${bits}"
-	fi
-	if [ "${untracked}" == "0" ]; then
-		bits="?${bits}"
-	fi
-	if [ "${deleted}" == "0" ]; then
-		bits="x${bits}"
-	fi
-	if [ "${dirty}" == "0" ]; then
-		bits="!${bits}"
-	fi
-	if [ ! "${bits}" == "" ]; then
-		echo " ${bits}"
-	else
-		echo ""
-	fi
-}
-
-export PS1=" \W \[\e[31;40m\]\`parse_git_branch\`\[\e[m\]  "
+# # get current status of git repo
+# export PS1="  \W \[\e[31;40m\]\`parse_git_branch\`\[\e[m\]$ "
 
 #echo 
 #echo
@@ -202,7 +148,12 @@ export PS1=" \W \[\e[31;40m\]\`parse_git_branch\`\[\e[m\]  "
 # Go Programming
 export GOPATH="/home/gricowijaya/go/"
 export PATH="$PATH:/home/gricowijaya/go/bin"
+
+# Default Terminal Editor
 export EDITOR="nvim"
+
+# REMOVE BG https://www.remove.bg/
+export REMOVE_BG_API_KEY=ckpR5iWeKp2go57yG1rjW3ub  
 
 # Node Version Manager
 export NVM_DIR="$HOME/.nvm"

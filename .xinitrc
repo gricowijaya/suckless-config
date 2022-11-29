@@ -56,6 +56,9 @@ fi
 # xterm -geometry 80x20+494-0 &
 # exec xterm -geometry 80x66+0+0 -name login
 
+# swap super with alt
+# setxkbmap -option altwin:swap_alt_win
+
 ## USING XFCE4
 # exec startxfce4
 
@@ -71,19 +74,16 @@ fi
 # wallpaper
 # feh --bg-fill $HOME/.local/src/wallpaper/934006.jpg  &
 
-# swap super with alt
-setxkbmap -option altwin:swap_alt_win
-
 ## DWM
-export _JAVA_AWT_WM_NONREPARENTING=1
-increasemousetrackpoint &
-statusbar &
-nm-applet & # to start the network applet
-firefox &
+# export _JAVA_AWT_WM_NONREPARENTING=1
+# increasemousetrackpoint &
+# statusbar &
+# nm-applet & # to start the network applet
+# firefox &
 # telegram-desktop &
 # discord --start-minimized &
-st & # uncomment to auto start st
+# st & # uncomment to auto start st
 # picom & # should be turn off to use the animated wallpaper
-startdwm
-exec dwm
+# startdwm
+# exec dwm
 
