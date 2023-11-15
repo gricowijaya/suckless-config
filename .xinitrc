@@ -72,7 +72,7 @@ fi
 # curseanimwall &
 
 # wallpaper
-# feh --bg-fill $HOME/.local/src/wallpaper/934006.jpg  &
+feh --bg-fill $HOME/.local/src/wallpaper/934006.jpg  &
 
 ## DWM
 # export _JAVA_AWT_WM_NONREPARENTING=1
