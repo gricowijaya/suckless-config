@@ -5,11 +5,11 @@ static const char *downvol[]             = { "amixer", "set", "Master", "10%-", 
 static const char *mutevol[]             = { "amixer", "set", "Master", "toggle", NULL };
 static const char *upbright[]            = { "brightnessctl", "s", "-n", "100+", NULL };
 static const char *downbright[]          = { "brightnessctl", "s", "-n", "100-", NULL };
-static const char *ss[]                  = { "flameshot", "gui", NULL};
+static const char *ss[]                  = { "scrclip", "-s", NULL};
 
 /* appearance */
-static const unsigned int borderpx       = 1;        /* border pixel of windows */
-/* static const unsigned int gappx          = 1;        /1* gaps between windows *1/ */
+static const unsigned int borderpx       = 2;        /* border pixel of windows */
+static const unsigned int gappx          = 1;        /* 1 gaps between windows */
 static const unsigned int gappih         = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv         = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh         = 10;       /* horiz outer gap between windows and screen edge */
@@ -21,18 +21,18 @@ static const int showbar                 = 1;        /* 0 means no bar */
 static const int topbar                  = 1;        /* 0 means no top bar */
 static const int extrabar                = 1;        /* 0 means no bottom bar */
 static const unsigned int systraypinning = 0;        /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft  = 0;   	 /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayonleft  = 0;        /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;        /* systray spacing */
 static const int systraypinningfailfirst = 1;        /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray             = 0;        /* 0 means no systray */
-static const char *fonts[]               = { "VictorMono Nerd Font Mono:pixelsize=18:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true" };
-static const char dmenufont[]            = "VictorMono Nerd Font Mono:pixelsize=18:antialias=true:autohint=true:size=16";
-static char normbgcolor[]                = "#000000"; // default #222222
-static char normbordercolor[]            = "#606060"; // default #444444
+static const int showsystray             = 1;        /* 0 means no systray */
+static const char *fonts[]               = { "monospace:pixelsize=20:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true" };
+static const char dmenufont[]            = "monospace:pixelsize=20:antialias=true:autohint=true:size=16";
+static char normbgcolor[]                = "#222222"; // default #000000
+static char normbordercolor[]            = "#000000"; // default #606060
 static char normfgcolor[]                = "#bbbbbb"; // default #bbbbbb
 static char selfgcolor[]                 = "#EEEEEE"; // default #EEEEEE
-static char selbordercolor[]             = "#EEEEEE"; // default 
-static char selbgcolor[]                 = "#000000"; // default #005577
+static char selbordercolor[]             = "#005577"; // default 
+static char selbgcolor[]                 = "#005577"; // default #000000
 
 static const char statussep              = ';';      /* separator between statuses */
 static char *colors[][3]                 = {
@@ -44,7 +44,8 @@ static char *colors[][3]                 = {
 /* tagging */
 // static const char *tags[] = { ">_", "", "", "", ""};
 /* static const char *tags[] = { "一", "二", "三", "四", "五"}; */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+static const char *tags[] = { "1", "2", "3", "4", "5", "6"};
 /* static const char *tags[] = { "ایک", "دو", "تین", "چار", "پانچ", "چھ", "سات"}; // in urdu cardinal must must apply bidi patch */
 
 static const Rule rules[] = {
@@ -55,13 +56,14 @@ static const Rule rules[] = {
 	/* class                instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
 	{ "TelegramDesktop",    NULL,     NULL,           1 << 6,         0,          0,           0,        -1 },
 	{ "whatsdesk",          NULL,     NULL,           1 << 6,         0,          0,           0,        -1 },
-	{ "discord",            NULL,     NULL,           1 << 7,         0,          0,           0,        -1 },
+	{ "discord",            NULL,     NULL,           1 << 5,         0,          0,           0,        -1 },
 	{ "zoom",               NULL,     NULL,           1 << 5,         0,          0,           0,        -1 },
 	{ "obs",                NULL,     NULL,           1 << 4,         0,          0,           0,        -1 },
-	{ "firefox",   		    NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "qutebrowser",   		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "chromium",   		NULL,     NULL,           1 << 8,         0,          0,          -1,        -1 },
-	{ "postman",   		    NULL,     NULL,           1 << 1,         0,          0,          -1,        -1 },
+	{ "firefox",  		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
+	{ "qutebrowser",   	NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
+	{ "chromium",   	NULL,     NULL,           1 << 8,         0,          0,          -1,        -1 },
+	{ "postman",   		NULL,     NULL,           1 << 1,         0,          0,          -1,        -1 },
+	{ "min",   		NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
 	{ "St",                 NULL,     NULL,           0,              0,          1,           0,        -1 },
 	{ NULL,                 NULL,     "Event Tester", 0,              0,          0,           1,        -1 }, /* xev */
 };
@@ -75,11 +77,11 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "|M|",      centeredmaster },          /* first entry is default */
+	{ "[]=",      tile },    	 	 /* first entry is default */
+ 	{ "[\\]",     dwindle },		 
+	{ "|M|",      centeredmaster },          
 	{ ">M>",      centeredfloatingmaster }, 
 	{ "><>",      NULL },                    /* no layout function means floating behavior */
- 	{ "[\\]",     dwindle },
-	{ "[]=",      tile },    
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
 };
@@ -102,6 +104,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont};
+static const char *lock[]     = { "slock", NULL};
 static const char *termcmd[]  = { "st", NULL };
 
 #include "shiftview.c"
@@ -113,9 +116,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_g,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_f,      zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lock} },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_s,      incnmaster,     {.i = +1 } },
-	{ MODKEY,		                XK_q,      killclient,     {0} },
+	{ MODKEY,	                XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_e,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[2]} },
@@ -167,7 +171,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,		        XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,	        XK_q,      quit,           {0} },
 };
 
 /* button definitions */
