@@ -5,7 +5,7 @@
 last="NONE"
 
 # Default values for LOW/CRITICAL status
-low=20
+low=30
 critical=15
 
 while true; do
