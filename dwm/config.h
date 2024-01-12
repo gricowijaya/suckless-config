@@ -46,6 +46,22 @@ static char *colors[][3]                 = {
 /* static const char *tags[] = { "ایک", "دو", "تین", "چار", "پانچ", "چھ", "سات"};   /* in urdu cardinal must must apply bidi patch */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6"};                        /* the most simple one*/
 
+/* launcher commands (They must be NULL terminated) */
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont};
+static const char *lock[]     = { "slock", NULL};
+static const char *termcmd[]  = { "st", NULL };
+static const char *surf[]     = { "surf", "duckduckgo.com", NULL };
+static const char *min[]      = { "min", NULL };
+
+static const Launcher launchers[] = {
+    /* command       name to display */
+	{  surf,         "surf" },
+	{  termcmd,      ">_" },
+	{  min,          "min" },
+	{  lock,         "lock" },
+};
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
