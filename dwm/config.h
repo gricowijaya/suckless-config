@@ -42,11 +42,9 @@ static char *colors[][3]                 = {
 };
 
 /* tagging */
-// static const char *tags[] = { ">_", "", "", "", ""};
-/* static const char *tags[] = { "一", "二", "三", "四", "五"}; */
-// static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-static const char *tags[] = { "1", "2", "3", "4", "5", "6"};
-/* static const char *tags[] = { "ایک", "دو", "تین", "چار", "پانچ", "چھ", "سات"}; // in urdu cardinal must must apply bidi patch */
+/* static const char *tags[] = { "一", "二", "三", "四", "五"};                     /* Use Kanji Font*/
+/* static const char *tags[] = { "ایک", "دو", "تین", "چار", "پانچ", "چھ", "سات"};   /* in urdu cardinal must must apply bidi patch */
+static const char *tags[] = { "1", "2", "3", "4", "5", "6"};                        /* the most simple one*/
 
 static const Rule rules[] = {
 	/* xprop(1):
