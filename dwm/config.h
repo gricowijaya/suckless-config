@@ -5,7 +5,7 @@ static const char *downvol[]             = { "amixer", "set", "Master", "10%-", 
 static const char *mutevol[]             = { "amixer", "set", "Master", "toggle", NULL };
 static const char *upbright[]            = { "brightnessctl", "s", "-n", "100+", NULL };
 static const char *downbright[]          = { "brightnessctl", "s", "-n", "100-", NULL };
-static const char *ss[]                  = { "scrclip", "-s", NULL};
+static const char *ss[]                  = { "scrclip", "-s", "--file $HOME/Pictures/Screenshots", NULL};
 
 /* appearance */
 static const unsigned int borderpx       = 2;        /* border pixel of windows */
