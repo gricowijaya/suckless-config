@@ -164,6 +164,11 @@ static Key keys[] = {
 	{ 0,                            XK_F6,     spawn,          {.v = upbright } },
 	{ MODKEY,                       XK_g,                         togglebar,            {0} },
 	{ MODKEY|ShiftMask,             XK_g,                         toggleextrabar,       {0} },
+	{ 0,                            XF86XK_AudioMute,             spawn,                {.v = mutevol } },
+	{ 0,                            XF86XK_AudioLowerVolume,      spawn,                {.v = downvol } },
+	{ 0,                            XF86XK_AudioRaiseVolume,      spawn,                {.v = upvol   } },
+	{ 0,                            XF86XK_MonBrightnessDown,     spawn,                {.v = downbright } },
+	{ 0,                            XF86XK_MonBrightnessUp,       spawn,                {.v = upbright } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
