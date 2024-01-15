@@ -42,9 +42,7 @@ static char *colors[][3]                 = {
 };
 
 /* tagging */
-/* static const char *tags[] = { "一", "二", "三", "四", "五"};                     /* Use Kanji Font*/
-/* static const char *tags[] = { "ایک", "دو", "تین", "چار", "پانچ", "چھ", "سات"};   /* in urdu cardinal must must apply bidi patch */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6"};                        /* the most simple one*/
+static const char *tags[] = { "1", "2", "3", "4", "5", "6"};
 
 /* launcher commands (They must be NULL terminated) */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
