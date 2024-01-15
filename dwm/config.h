@@ -199,10 +199,10 @@ static Key keys[] = {
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkRootWin,           0,              Button3,        spawn,          {.v = termcmd } },
+	{ ClkRootWin,           0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-	{ ClkWinTitle,          0,              Button1,        togglebar,      {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+	{ ClkStatusText,        0,              Button1,        toggleextrabar, {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
@@ -212,7 +212,6 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 	{ ClkExBarLeftStatus,   0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkExBarLeftStatus,   0,              Button1,        toggleextrabar, {0} },
 	{ ClkExBarMiddle,       0,              Button1,        toggleextrabar, {0} },
 	{ ClkExBarRightStatus,  0,              Button2,        spawn,          {.v = termcmd } },
 };
