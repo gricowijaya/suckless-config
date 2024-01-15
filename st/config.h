@@ -106,7 +106,7 @@ static const char *colorname[] = {
 	"#ebdbb2",
 	[255] = 0,
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#282c34",   /* 256 -> bg default : #282828*/
+	"#222222",   /* 256 -> bg default : #282828 -> last time use "#282c34"*/
 	"#eeeeee",   /* 257 -> fg default : #ebdbb2*/
 	"#add8e6", /* 258 -> cursor */
 };
