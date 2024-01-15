@@ -81,18 +81,16 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "TelegramDesktop",    NULL,     NULL,           1 << 6,         0,          0,           0,        -1 },
-	{ "discord",            NULL,     NULL,           1 << 5,         0,          0,           0,        -1 },
-	{ "zoom",               NULL,     NULL,           1 << 5,         0,          0,           0,        -1 },
-	{ "obs",                NULL,     NULL,           1 << 4,         0,          0,           0,        -1 },
-	{ "firefox",            NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "chromium",           NULL,     NULL,           1 << 8,         0,          0,          -1,        -1 },
-	{ "postman",            NULL,     NULL,           1 << 1,         0,          0,          -1,        -1 },
-	{ "Min",                NULL,     NULL,           1 << 2,         0,          0,          -1,        -1 },
-	{ "Code",               NULL,     NULL,           1 << 1,         0,          0,          -1,        -1 },
-	{ "St",                 NULL,     NULL,           0,              0,          1,           0,        -1 },
-	{ NULL,                 NULL,     "Event Tester", 0,              0,          0,           1,        -1 }, /* xev */
+	/* class                instance  title           tags mask  CenterThisWindow?  isfloating  isterminal  noswallow  monitor */
+	{ "TelegramDesktop",    NULL,     NULL,           1 << 6,            0,              0,          0,           0,        -1 },
+	{ "discord",            NULL,     NULL,           1 << 5,            0,              0,          0,           0,        -1 },
+	{ "obs",                NULL,     NULL,           1 << 4,            0,              0,          0,           0,        -1 },
+	{ "firefox",            NULL,     NULL,           1 << 2,            0,              0,          0,          -1,        -1 },
+	{ "postman",            NULL,     NULL,           1 << 1,            0,              0,          0,          -1,        -1 },
+	{ "Min",                NULL,     NULL,           1 << 2,            0,              0,          0,          -1,        -1 },
+	{ "Code",               NULL,     NULL,           1 << 1,            0,              0,          0,          -1,        -1 },
+	{ "St",                 NULL,     NULL,           0,                 0,              0,          1,           0,        -1 },
+	{ NULL,                 NULL,     "Event Tester", 0,                 0,              0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
