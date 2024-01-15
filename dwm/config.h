@@ -46,18 +46,34 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6"};
 
 /* launcher commands (They must be NULL terminated) */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont};
-static const char *lock[]     = { "slock", NULL};
-static const char *termcmd[]  = { "st", NULL };
-static const char *surf[]     = { "surf", "duckduckgo.com", NULL };
-static const char *min[]      = { "min", NULL };
+static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont};
+static const char *lock[]        = { "slock", NULL};
+static const char *termcmd[]     = { "st", NULL };
+static const char *xdgxmenu[]    = { "xdg-xmenu", NULL };
+static const char *surf[]        = { "surf", "duckduckgo.com", NULL };
+static const char *code[]        = { "code", NULL };
+static const char *postman[]     = { "postman", NULL };
+static const char *min[]         = { "min", NULL };
+static const char *firefox[]     = { "firefox", NULL };
+static const char *file[]        = { "pcmanfm", NULL };
+static const char *ffmpeg[]      = { "ffmpeg", "-video_size", "1920x1080", "-framerate", "25", "-f", "x11grab", "-i", ":0", "%.mp4", NULL };
+static const char *netedit[]     = { "nm-connection-editor", NULL };
+static const char *reboot[]      = { "reboot", NULL };
+static const char *shutdown[]    = { "shutdown", "now", NULL };
 
 static const Launcher launchers[] = {
-    /* command       name to display */
-	{  surf,         "surf" },
-	{  termcmd,      ">_" },
-	{  min,          "min" },
-	{  lock,         "lock" },
+    /* command          name to display */
+	{  file,            "📁" },
+	{  termcmd,         "📝" },
+	{  min,             "🌐" },
+	{  ss,              "📸" },
+	{  ffmpeg,          "📹" },
+	{  lock,            "🔒" },
+	{  netedit,         "📡" },
+	{  reboot,          "😴" },
+	{  shutdown,        "🛑" },
+
+
 };
 
 static const Rule rules[] = {
