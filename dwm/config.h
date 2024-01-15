@@ -25,8 +25,8 @@ static const unsigned int systrayonleft  = 0;        /* 0: systray in the right 
 static const unsigned int systrayspacing = 2;        /* systray spacing */
 static const int systraypinningfailfirst = 1;        /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray             = 1;        /* 0 means no systray */
-static const char *fonts[]               = { "3270 Nerd Font Mono:pixelsize=20:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=11:antialias=true:autohint=true" };
-static const char dmenufont[]            = { "3270 Nerd Font Mono:pixelsize=20:antialias=true:autohint=true:size=16" };
+static const char *fonts[]               = { "Terminus:pixelsize=18:antialias=true:autohint=true:size=16", "JoyPixels:pixelsize=16:antialias=true:autohint=true" };
+static const char dmenufont[]            = { "Terminus:pixelsize=18:antialias=true:autohint=true:size=16" };
 static char normbgcolor[]                = "#222222"; // default #000000
 static char normbordercolor[]            = "#000000"; // default #606060
 static char normfgcolor[]                = "#bbbbbb"; // default #bbbbbb
