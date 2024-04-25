@@ -153,7 +153,7 @@ export PATH="$PATH:/home/gricowijaya/go/bin"
 export EDITOR="nvim"
 
 # REMOVE BG https://www.remove.bg/
-export REMOVE_BG_API_KEY=ckpR5iWeKp2go57yG1rjW3ub  
+export REMOVE_BG_API_KEY=  
 
 # Node Version Manager
 export NVM_DIR="$HOME/.nvm"
